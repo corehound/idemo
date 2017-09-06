@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs" ng-app="bookingApp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Innogy Rooms Reservations</title>
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <link rel="stylesheet" href="../css/main.min.css" />
+        
+	<script src="libs/jquery.js"></script>
+	<script src="libs/angular.js"></script>
+	<script src="libs/angular-animate.js"></script>
+	<script src="libs/angular-resource.js"></script>
+	<script src="libs/angular-route.js"></script>
+	<script src="libs/angular-hateoas.js"></script>
+	<script src="libs/angular-spring-data-rest.js"></script>
+	
+	<script src="app.module.js"></script>
+	<script src="app.config.js"></script>
+	
+	<script src="booking-list/booking-list.module.js"></script>
+	<script src="booking-list/booking-list.component.js"></script>
+	
+	<script src="menu/menu.module.js"></script>
+	<script src="menu/menu.component.js"></script>
+	
+	<script src="service/booking.module.js"></script>
+	<script src="service/booking.service.js"></script>
+	
+  </head>
+  <body class="no-js">
+    <div class="hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" viewBox="0 0 100 100" id="svg-calendar" xmlns="http://www.w3.org/2000/svg"><path d="M92.5 10H80V7.5a2.5 2.5 0 0 0-5 0V10H25V7.5a2.5 2.5 0 0 0-5 0V10H7.5C3.365 10 0 13.365 0 17.5v70C0 91.635 3.365 95 7.5 95h85c4.135 0 7.5-3.365 7.5-7.5v-70c0-4.135-3.365-7.5-7.5-7.5zm0 80h-85A2.5 2.5 0 0 1 5 87.5V35h90v52.5a2.5 2.5 0 0 1-2.5 2.5zm-10-10h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm15 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm0-10h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-15 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm0-10h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm15 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm0-10h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm15 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm30 0h-5a2.5 2.5 0 0 1 0-5h5a2.5 2.5 0 0 1 0 5zm-75-35H20v7.5a2.5 2.5 0 0 0 5 0V15h50v7.5a2.5 2.5 0 0 0 5 0V15h12.5a2.5 2.5 0 0 1 2.5 2.5V30H5V17.5A2.5 2.5 0 0 1 7.5 15z"/></symbol><symbol fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414" viewBox="0 0 100 100" id="svg-marker" xmlns="http://www.w3.org/2000/svg"><path d="M49.995 100c-.765 0-1.49-.35-1.965-.955-.285-.365-7.09-9.07-13.985-21.925-4.06-7.565-7.3-14.995-9.625-22.08C21.485 46.105 20 37.68 20 30 20 13.46 33.46 0 50 0s30 13.46 30 30c0 7.68-1.49 16.1-4.42 25.04-2.325 7.085-5.565 14.515-9.625 22.08-6.9 12.855-13.7 21.56-13.985 21.925-.475.605-1.2.955-1.965.955zm0-95c-13.785 0-25 11.215-25 25 0 16.27 7.315 33.32 13.455 44.755 4.51 8.405 9.045 15.07 11.545 18.55 2.51-3.495 7.075-10.2 11.59-18.63C67.7 63.26 74.995 46.24 74.995 30c0-13.785-11.215-25-25-25zm0 40c-8.27 0-15-6.73-15-15s6.73-15 15-15 15 6.73 15 15-6.73 15-15 15zm0-25c-5.515 0-10 4.485-10 10s4.485 10 10 10 10-4.485 10-10-4.485-10-10-10z"/></symbol></svg></div>
+    <!--[if lte IE 9]>
+    <div class="old-ie-warning">
+      <p>Používáte zastaralou verzi prohlížeče. <a href="http://www.whatbrowser.org/intl/cs/">Více informací &raquo;</a></p>
+    </div>
+    <![endif]-->
+    <div class="header" role="banner">
+      <div class="container">
+        <div class="logo">
+          <a href="#">
+            <img src="../img/logo.png" alt="Innogy" />
+            Rezervace místností
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="content" role="main">
+        <div ng-view></div>
+    </div>
+    
+    
+    
+    <script src="../js/main.min.js" async></script>
+  </body>
+</html>

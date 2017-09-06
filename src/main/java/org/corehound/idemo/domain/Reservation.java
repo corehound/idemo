@@ -42,6 +42,10 @@ public class Reservation {
 		this.room = room;
 	}
 	
+	public String getCity() {
+		return room.getCity().getName();
+	}
+	
 	
 
 }

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" ng-app="bookingApp">
+<head>
+<meta charset="utf-8">
+<title>Booking</title>
+<link rel="stylesheet" href="libs/bootstrap.css" />
+<script src="libs/jquery.js"></script>
+<script src="libs/angular.js"></script>
+<script src="libs/angular-animate.js"></script>
+<script src="libs/angular-resource.js"></script>
+<script src="libs/angular-route.js"></script>
+
+<script src="app.module.js"></script>
+<script src="app.config.js"></script>
+
+<script src="booking-list/booking-list.module.js"></script>
+<script src="booking-list/booking-list.component.js"></script>
+
+<script src="menu/menu.module.js"></script>
+<script src="menu/menu.component.js"></script>
+
+</head>
+
+<body>
+
+	<div ng-view></div>
+
+</body>
+</html>
