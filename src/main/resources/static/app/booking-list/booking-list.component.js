@@ -11,18 +11,13 @@ angular.
 
     	var httpPromise = $http.get('/reservation');
 
-    	SpringDataRestAdapter.process(httpPromise).then(function (processedResponse) {
+    	SpringDataRestAdapter.process(httpPromise, 'room').then(function (processedResponse) {
     		
-    		var rResource = processedResponse._embeddedItems[0]._resources("room");
-    		
-    		console.log(rResource);
-    		
-    		var room = rResource.get(function() {
-    		    console.log("Room name: " + room.name);
-    		  });
-    	});  
-    	
-
+    		  angular.forEach(processedResponse._embeddedItems, function (reservation, key) {
+    			    console.log(" name: " + reservation.user);
+    			    console.log(" name: " + reservation.room.name);
+    			  });
+    	});    	
 
 		
     	$scope.cities = ["Praha", "Brno", "Hradec Kralové"];
