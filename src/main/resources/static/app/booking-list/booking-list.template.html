@@ -11,17 +11,24 @@
 		<div class="room-wrapper" ng-repeat="booking in bookings">
 			<div class="room">
 				<div class="room-content">
-					<h2>{{booking.city}}</h2>
+					<h2>{{booking.room.cityName}}</h2>
 					<div class="room-description">
 						<span> <svg class='icon' width='15' height='15'>
-								<use xlink:href='#svg-calendar'></use></svg> {{booking.date}}
-						</span> <span> <svg class='icon' width='15' height='15'>
-								<use xlink:href='#svg-marker'></use></svg> {{booking.room}}
+								<use xlink:href='#svg-calendar'></use></svg> {{booking.date | date:'dd/MM/yyyy'}}
+						</span> 
+						<span> <svg class='icon' width='15' height='15'>
+								<use xlink:href='#svg-marker'></use></svg> {{booking.room.name}}
 						</span>
+						
+						<span> <svg class='icon' width='15' height='15'>
+								<use xlink:href='#svg-marker'></use></svg> Uživatel: {{booking.user}}
+						</span>
+						
 					</div>
+					
 				</div>
 				<div class="room-action">
-					<a class="btn btn-danger" ng-click="deleteBooking(booking.id)">Zrušit rezervaci</a>
+					<a class="btn btn-danger" ng-click="deleteBooking(booking)">Zrušit rezervaci</a>
 				</div>
 			</div>
 		</div>
@@ -30,29 +37,32 @@
 
 	<div class="modal">
 		<div class="modal-content">
-			<form>
+			<form name="reservationForm">
 				<fieldset>
 					<legend>Vytvoření nové rezervace</legend>
-					<div>
-						<label for="city">Vyberte město</label> 
-						<select id="city" ng-model="selectedCity" ng-options="x for x in cities" ng-change="cityChanged()">
-						</select>
-					</div>
-
-					<div>
-						<label for="room">Vyberte místnost</label> 
-						<select id="room" ng-model="selectedRoom" ng-options="x for x in rooms" ng-change="roomChanged()">
-						</select>
-					</div>
 					
 					<div>
-						<label for="date">Vyberte datum</label> <input type="text" id="date" />
+						<label for="city">Vyberte město</label> 
+						<select name="city" id="city" ng-model="selectedCity" ng-change="cityChanged()" ng-options="x.name for x in cities" required>
+						</select>				
+					</div>
+									
+					<div>
+						<label for="room">Vyberte místnost</label> 
+						<select name="room" id="room" ng-model="selectedRoom" ng-options="x.name for x in rooms" ng-change="roomChanged()" required>
+						</select>
+					</div>
+										
+					<div>
+						<label for="date">Vyberte datum</label> 
+						<input name="date" ng-model="selectedDate" type="date" id="date" min="{{minDate | date:'dd/MM/yyyy'}}" required/>
 					</div>
 					
 				</fieldset>
 				<div class="modal-actions">
 					<a ng-click="cancelBooking()" class="btn btn-danger js-modal">Zavřít</a>
-					<a ng-click="createBooking()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
+					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createBooking()">Vytvořit rezervaci</a>
+					<a ng-show="!reservationForm.city.$invalid && !reservationForm.room.$invalid && !reservationForm.date.$invalid" ng-click="createBooking()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
 				</div>
 			</form>
 		</div>

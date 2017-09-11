@@ -4,6 +4,7 @@ import org.corehound.idemo.domain.City;
 import org.corehound.idemo.domain.CityRepository;
 import org.corehound.idemo.domain.MeetingRoom;
 import org.corehound.idemo.domain.MeetingRoomRepository;
+import org.corehound.idemo.domain.Reservation;
 import org.corehound.idemo.domain.ReservationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -44,11 +45,12 @@ public class IdemoApplication {
 			meetingRoomRepository.save(new MeetingRoom("Manáslu",plzen));
 			meetingRoomRepository.save(new MeetingRoom("Nanga Parbat",plzen));
 			
-//			Reservation jirkovaRezervace = new Reservation();
-//			jirkovaRezervace.setUser("jirka");
-//			jirkovaRezervace.setRoom(mountEverest);
-//			
-//			reservationRepository.save(jirkovaRezervace);
+			Reservation jirkovaRezervace = new Reservation();
+			jirkovaRezervace.setUser("jirka");
+			jirkovaRezervace.setRoom(mountEverest);
+			jirkovaRezervace.setDate(new java.sql.Date(new java.util.Date().getTime()));
+			
+			reservationRepository.save(jirkovaRezervace);
 			
 		};
 	}	

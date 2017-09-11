@@ -6,13 +6,10 @@ angular.
       $locationProvider.hashPrefix('!');
 
       $routeProvider.
-        when('/menu', {
-          template: '<menu></menu>'
-        }).
-        when('/bookings', {
+        when('/home', {
           template: '<booking-list></booking-list>'
         }).
-        otherwise('/menu');
+        otherwise('/home');
       
     }
      

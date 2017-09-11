@@ -19,7 +19,7 @@ public class City {
 
 	private String name;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="city")
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="city")
 	private List<MeetingRoom> rooms;
 	
 	public City(){}

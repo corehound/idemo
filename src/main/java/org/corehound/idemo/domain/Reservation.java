@@ -1,5 +1,7 @@
 package org.corehound.idemo.domain;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,9 @@ public class Reservation {
 	
 	private String user;
 	
-	@ManyToOne
+	private Date date;
+	
+	@ManyToOne()
 	private MeetingRoom room;
 
 	public long getId() {
@@ -33,6 +37,14 @@ public class Reservation {
 	public void setUser(String user) {
 		this.user = user;
 	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public MeetingRoom getRoom() {
 		return room;
@@ -41,11 +53,5 @@ public class Reservation {
 	public void setRoom(MeetingRoom room) {
 		this.room = room;
 	}
-	
-	public String getCity() {
-		return room.getCity().getName();
-	}
-	
-	
-
+		
 }

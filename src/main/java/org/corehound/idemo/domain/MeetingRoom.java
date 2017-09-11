@@ -1,6 +1,8 @@
 package org.corehound.idemo.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,7 @@ public class MeetingRoom {
 	
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne()
 	private City city;
 	
 	public MeetingRoom() {}
@@ -47,6 +49,10 @@ public class MeetingRoom {
 
 	public void setCity(City city) {
 		this.city = city;
+	}
+	
+	public String getCityName() {
+		return this.city.getName();
 	}
 	
 	
