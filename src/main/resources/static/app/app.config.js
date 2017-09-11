@@ -1,5 +1,5 @@
 angular.
-  module('bookingApp').
+  module('reservationApp').
   config(['$locationProvider', '$routeProvider',
 	  
     function config($locationProvider, $routeProvider) {
@@ -7,7 +7,7 @@ angular.
 
       $routeProvider.
         when('/home', {
-          template: '<booking-list></booking-list>'
+          template: '<reservation-list></reservation-list>'
         }).
         otherwise('/home');
       

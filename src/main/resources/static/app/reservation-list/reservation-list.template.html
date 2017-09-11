@@ -8,27 +8,27 @@
 <div class="container">
 	<div class="rooms">
 
-		<div class="room-wrapper" ng-repeat="booking in bookings">
+		<div class="room-wrapper" ng-repeat="reservation in reservations">
 			<div class="room">
 				<div class="room-content">
-					<h2>{{booking.room.cityName}}</h2>
+					<h2>{{reservation.room.cityName}}</h2>
 					<div class="room-description">
 						<span> <svg class='icon' width='15' height='15'>
-								<use xlink:href='#svg-calendar'></use></svg> {{booking.date | date:'dd/MM/yyyy'}}
+								<use xlink:href='#svg-calendar'></use></svg> {{reservation.date | date:'dd/MM/yyyy'}}
 						</span> 
 						<span> <svg class='icon' width='15' height='15'>
-								<use xlink:href='#svg-marker'></use></svg> {{booking.room.name}}
+								<use xlink:href='#svg-marker'></use></svg> {{reservation.room.name}}
 						</span>
 						
 						<span> <svg class='icon' width='15' height='15'>
-								<use xlink:href='#svg-marker'></use></svg> Uživatel: {{booking.user}}
+								<use xlink:href='#svg-marker'></use></svg> Uživatel: {{reservation.user}}
 						</span>
 						
 					</div>
 					
 				</div>
 				<div class="room-action">
-					<a class="btn btn-danger" ng-click="deleteBooking(booking)">Zrušit rezervaci</a>
+					<a class="btn btn-danger" ng-click="deleteReservation(reservation)">Zrušit rezervaci</a>
 				</div>
 			</div>
 		</div>
@@ -60,9 +60,9 @@
 					
 				</fieldset>
 				<div class="modal-actions">
-					<a ng-click="cancelBooking()" class="btn btn-danger js-modal">Zavřít</a>
-					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createBooking()">Vytvořit rezervaci</a>
-					<a ng-show="!reservationForm.city.$invalid && !reservationForm.room.$invalid && !reservationForm.date.$invalid" ng-click="createBooking()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
+					<a ng-click="cancelReservation()" class="btn btn-danger js-modal">Zavřít</a>
+					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createReservation()">Vytvořit rezervaci</a>
+					<a ng-show="!reservationForm.city.$invalid && !reservationForm.room.$invalid && !reservationForm.date.$invalid" ng-click="createReservation()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
 				</div>
 			</form>
 		</div>

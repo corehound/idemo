@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('bookingApp', [
-  'bookingList',
+angular.module('reservationApp', [
+  'reservationList',
   'ngRoute',
   'ngResource',
   'spring-data-rest'

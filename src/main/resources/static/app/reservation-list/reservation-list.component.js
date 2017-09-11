@@ -1,12 +1,12 @@
 'use strict';
 
 angular.
-  module('bookingList').
-  component('bookingList', {
-    templateUrl: 'app/booking-list/booking-list.template.html',
+  module('reservationList').
+  component('reservationList', {
+    templateUrl: 'app/reservation-list/reservation-list.template.html',
     controller: ['$http', '$scope', 'SpringDataRestAdapter',
     	
-      function BookingListController($http, $scope, SpringDataRestAdapter) {
+      function ReservationListController($http, $scope, SpringDataRestAdapter) {
     			
     	$scope.user = "picus";
         $scope.selectedCity = "";
@@ -23,15 +23,15 @@ angular.
 			    $scope.cities = processedResponse._embeddedItems;
     	});
     	    	  
-        $scope.deleteBooking = function (booking) {
-        	console.log(booking._links.self.href);
-        	var httpPromise = $http.delete(booking._links.self.href).then(function () { 
+        $scope.deleteReservation = function (reservation) {
+        	console.log(reservation._links.self.href);
+        	var httpPromise = $http.delete(reservation._links.self.href).then(function () { 
         		loadReservationList();
         	});   	
         };
         
-        $scope.createBooking = function () {
-        	console.log('create booking');
+        $scope.createReservation = function () {
+        	console.log('create reservation');
         	console.log($scope.selectedCity);
         	console.log($scope.selectedRoom);
         	console.log($scope.selectedDate.getDate() + $scope.selectedDate.getMonth() + $scope.selectedDate.getFullYear());
@@ -100,7 +100,7 @@ angular.
         			    console.log("XXXXXXXXXXXXXXXXXXX name: " + reservation.room);
         			  });
         		   
-        		  $scope.bookings = processedResponse._embeddedItems;
+        		  $scope.reservations = processedResponse._embeddedItems;
         	}); 
         	        	
         }
