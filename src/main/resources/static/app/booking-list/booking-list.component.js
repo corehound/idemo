@@ -8,6 +8,7 @@ angular.
     	
       function BookingListController($http, $scope, SpringDataRestAdapter) {
     			
+    	$scope.user = "picus";
         $scope.selectedCity = "";
       	$scope.selectedRoom = "";
       	$scope.selectedDate = new Date();
@@ -41,7 +42,7 @@ angular.
         	}
         	
         	var date = $scope.selectedDate.getFullYear() + "-" + ($scope.selectedDate.getMonth() + 1) + "-" + $scope.selectedDate.getDate();
-        	var data = "{\"user\": \"kakrda\", \"date\" : \"" + date +  "\"}";
+        	var data = "{\"user\": \"" + $scope.user + "\", \"date\" : \"" + date +  "\"}";
         
         	console.log(data);
         	
