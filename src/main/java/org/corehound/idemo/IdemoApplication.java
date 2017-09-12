@@ -63,8 +63,8 @@ public class IdemoApplication {
 
             serviceProvider
                 .metadataGenerator()
-//                .entityId("login-test")
-                .entityId("localhost-demo")
+                .entityId("login-test")
+//                .entityId("localhost-demo")
             .and()
                 .sso()
                 .defaultSuccessURL("/home")
@@ -73,8 +73,8 @@ public class IdemoApplication {
                 .defaultTargetURL("/")
             .and()
                 .metadataManager()
-//                .metadataLocations("classpath:/idp-innogy.xml")
-                .metadataLocations("classpath:/idp-ssocircle-new.xml")
+                .metadataLocations("classpath:/idp-innogy.xml")
+//                .metadataLocations("classpath:/idp-ssocircle-new.xml")
                 .refreshCheckInterval(0)
             .and()
                 .extendedMetadata()
