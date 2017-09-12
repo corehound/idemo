@@ -1,5 +1,5 @@
 <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
-	entityID="login-test">
+	entityID="login.innogy.cz">
 	<IDPSSODescriptor WantAuthnRequestsSigned="false"
 		protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 		<KeyDescriptor use="signing">
