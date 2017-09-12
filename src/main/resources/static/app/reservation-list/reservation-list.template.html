@@ -8,7 +8,7 @@
 <div class="container">
 
 	<div class="rooms">
-	
+
 		<div class="room-wrapper" ng-repeat="reservation in reservations">
 			<div class="room">
 				<div class="room-content">
@@ -16,17 +16,17 @@
 					<div class="room-description">
 						<span> <svg class='icon' width='15' height='15'>
 								<use xlink:href='#svg-calendar'></use></svg> {{reservation.date | date:'dd/MM/yyyy'}}
-						</span> 
+						</span>
 						<span> <svg class='icon' width='15' height='15'>
 								<use xlink:href='#svg-marker'></use></svg> {{reservation.room.name}}
 						</span>
-						
+
 						<span> <svg class='icon' width='15' height='15'>
 								<use xlink:href='#svg-marker'></use></svg> Uživatel: {{reservation.user}}
 						</span>
-						
+
 					</div>
-					
+
 				</div>
 				<div class="room-action">
 					<a class="btn btn-danger" ng-click="deleteReservation(reservation)">Zrušit rezervaci</a>
@@ -42,24 +42,24 @@
 			<form name="reservationForm">
 				<fieldset>
 					<legend>Vytvoření nové rezervace + {{error}}</legend>
-					
+
 					<div>
-						<label for="city">Vyberte město</label> 
+						<label for="city">Vyberte město</label>
 						<select name="city" id="city" ng-model="selectedCity" ng-change="cityChanged()" ng-options="x.name for x in cities" required>
-						</select>				
+						</select>
 					</div>
-									
+
 					<div>
-						<label for="room">Vyberte místnost</label> 
+						<label for="room">Vyberte místnost</label>
 						<select name="room" id="room" ng-model="selectedRoom" ng-options="x.name for x in rooms" ng-change="roomChanged()" required>
 						</select>
 					</div>
-									
+
 					<div>
-						<label for="date">Vyberte datum</label> 
-						<input name="date" ng-model="selectedDate" type="date" id="date" min="{{minDate}}" placeholder="dd/MM/yyyy" required />
+						<label for="date">Vyberte datum</label>
+						<input name="date" ng-model="selectedDate" class="js-datepicker" type="text" id="date" min="{{minDate}}" placeholder="dd/MM/yyyy" required />
 					</div>
-					
+
 				</fieldset>
 				<div class="modal-actions">
 					<a ng-click="cancelReservation()" class="btn btn-danger js-modal">Zavřít</a>
