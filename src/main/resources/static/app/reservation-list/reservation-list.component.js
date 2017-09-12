@@ -7,21 +7,18 @@ component('reservationList', {
     controller: ['$http', '$scope', '$rootScope', 'SpringDataRestAdapter',
 
         function ReservationListController($http, $scope, $rootScope, SpringDataRestAdapter) {
+    	
             var date = new Date()
-            //var selectedDate = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear()
 
             $scope.selectedCity = "";
             $scope.selectedRoom = "";
-            $scope.selectedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
-            $scope.minDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
-
-            loadReservationList();
-            loadCityList();
+            $scope.selectedDate = (date.getMonth() + 1)  + '/' + date.getDate() + '/' + date.getFullYear()
+            $scope.minDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
 
             $scope.deleteReservation = function(reservation) {
                 console.log(reservation._links.self.href);
                 var httpPromise = $http.delete(reservation._links.self.href).then(function() {
-                    loadReservationList();
+                    $scope.loadReservationList();
                 });
             };
 
@@ -50,8 +47,10 @@ component('reservationList', {
 
                 SpringDataRestAdapter.process(getPromise).then(function(processedResponse) {
                     if (processedResponse._embeddedItems.length > 0) {
-                    	$scope.error="FUUUJ";
+                    	$scope.error = 'R1';
+                    	
                     } else {
+                    	$scope.error = null;
 
                     	var httpPromise = $http.post('/reservation', data, config);
 
@@ -67,12 +66,12 @@ component('reservationList', {
 
                             var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
 
-                            loadReservationList();
+                            $scope.loadReservationList();
                             var date = new Date()
 
                             $scope.selectedCity = "";
                             $scope.selectedRoom = "";
-                            $scope.selectedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
+                            $scope.selectedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
                         });
 
                         $scope.hideModal()
@@ -98,19 +97,20 @@ component('reservationList', {
                 $scope.rooms = $scope.selectedCity.rooms._embeddedItems;
             };
 
-            function loadReservationList() {
-
+            $scope.loadReservationList = function() {
+            	console.log('loadReservationList()');
                 var httpPromise = $http.get('/reservation');
-
                 SpringDataRestAdapter.process(httpPromise, ['city', 'room'], true).then(function(processedResponse) {
-                    angular.forEach(processedResponse._embeddedItems, function(reservation, key) {
-                        // console.log(" name: " + reservation.user);
-                        // console.log(" name: " + reservation.room.name);
-                    });
-
                     $scope.reservations = processedResponse._embeddedItems;
                 });
-
+            }
+            
+            $scope.loadMyReservationList = function() {
+            	console.log('loadMyReservationList()');
+                var httpPromise = $http.get('/reservation/search/findByUser?user=' + $rootScope.userId);
+                SpringDataRestAdapter.process(httpPromise, ['city', 'room'], true).then(function(processedResponse) {
+                    $scope.reservations = processedResponse._embeddedItems;
+                });
             }
 
             function loadCityList() {
@@ -119,6 +119,9 @@ component('reservationList', {
                     $scope.cities = processedResponse._embeddedItems;
                 });
             }
+            
+            $scope.loadReservationList();
+            loadCityList();
 
         }
 

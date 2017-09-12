@@ -3,6 +3,13 @@
 		<h1>Aktivní rezervace</h1>
 		<button class="btn btn-success js-modal" ng-click="showModal()">Vytvořit novou rezervaci</button>
 	</div>
+	
+	<div class="container">
+		<div>
+			<button class="btn" ng-click="loadMyReservationList()">Moje rezervace</button>
+			<button class="btn" ng-click="loadReservationList()">Sezname všech rezervací</button>
+		</div>
+	</div>
 </div>
 <hr />
 <div class="container">
@@ -40,8 +47,12 @@
 		<div class="modal-content">
 			<form name="reservationForm">
 				<fieldset>
-					<legend>Vytvoření nové rezervace + {{error}}</legend>
+					<legend>Vytvoření nové rezervace</legend>
 
+					<div ng-if="error=='R1'">
+						Místnost je již obsazena
+					</div>
+					
 					<div>
 						<label for="city">Vyberte město</label>
 						<select name="city" id="city" ng-model="selectedCity" ng-change="cityChanged()" ng-options="x.name for x in cities" required>
