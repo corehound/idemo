@@ -12,8 +12,8 @@ component('reservationList', {
 
             $scope.selectedCity = "";
             $scope.selectedRoom = "";
-            $scope.selectedDate = (date.getMonth() + 1)  + '/' + date.getDate() + '/' + date.getFullYear()
-            $scope.minDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
+            $scope.selectedDate = (date.getMonth() + 1)  + '/' + date.getDate() + '/' + date.getFullYear();
+            $scope.minDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 
             $scope.deleteReservation = function(reservation) {
                 console.log(reservation._links.self.href);
@@ -22,6 +22,9 @@ component('reservationList', {
                 });
             };
 
+            /*
+             * 
+             */
             $scope.createReservation = function() {
                 console.log('create reservation');
 
@@ -37,11 +40,7 @@ component('reservationList', {
 
                 console.log(data);
 
-                var config = {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
+                var config = {headers: {'Content-Type': 'application/json'}}
 
                 var getPromise = $http.get('/reservation/search/findByDateAndRoomId?date=' + date + '&roomid=' + $scope.selectedRoom.id);
 
@@ -58,11 +57,7 @@ component('reservationList', {
 
                             var data2 = $scope.selectedRoom._links.self.href;
 
-                            var config2 = {
-                                headers: {
-                                    'Content-Type': 'text/uri-list'
-                                }
-                            }
+                            var config2 = {headers: {'Content-Type': 'text/uri-list'}}
 
                             var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
 
