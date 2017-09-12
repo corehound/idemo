@@ -31,7 +31,9 @@ component('reservationList', {
                     return;
                 }
 
-                var date = $scope.selectedDate.getFullYear() + "-" + ($scope.selectedDate.getMonth() + 1) + "-" + $scope.selectedDate.getDate();
+                var dateData = jQuery('#date').val().split('/')
+                var date = dateData[2] + '-' + dateData[0] + '-' + dateData[1]
+                //var date = $scope.selectedDate.getFullYear() + "-" + ($scope.selectedDate.getMonth() + 1) + "-" + $scope.selectedDate.getDate();
                 var data = "{\"user\": \"" + $rootScope.userId + "\", \"date\" : \"" + date + "\"}";
 
                 console.log(data);
