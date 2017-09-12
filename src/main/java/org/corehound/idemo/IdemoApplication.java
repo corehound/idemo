@@ -11,6 +11,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -19,7 +24,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProv
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 
 @SpringBootApplication
-@EnableSAMLSSO
+//@EnableSAMLSSO
 public class IdemoApplication {
 
 	public static void main(String[] args) {
@@ -31,7 +36,7 @@ public class IdemoApplication {
 		return (args) -> {
 			City praha = cityRepository.save(new City("Praha"));
 			City brno = cityRepository.save(new City("Brno"));
-			City plzen = cityRepository.save(new City("Plzen"));
+			City plzen = cityRepository.save(new City("Ostrava"));
 			
 			MeetingRoom mountEverest = meetingRoomRepository.save(new MeetingRoom("Mount Everest",praha));
 			meetingRoomRepository.save(new MeetingRoom("K2",praha));
@@ -48,49 +53,76 @@ public class IdemoApplication {
 			Reservation jirkovaRezervace = new Reservation();
 			jirkovaRezervace.setUser("jirka");
 			jirkovaRezervace.setRoom(mountEverest);
-			jirkovaRezervace.setDate(new java.sql.Date(new java.util.Date().getTime()));
+			jirkovaRezervace.setDate(new java.util.Date());
 			
 			reservationRepository.save(jirkovaRezervace);
 			
 		};
 	}	
 	
-    @Configuration
-    public static class IdemoServiceProviderConfig extends ServiceProviderConfigurerAdapter {
-
-        @Override
-        public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
-
-            serviceProvider
-                .metadataGenerator()
-                .entityId("login-test")
+//    @Configuration
+//    public static class IdemoServiceProviderConfig extends ServiceProviderConfigurerAdapter {
+//
+//        @Override
+//        public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
+//
+//            serviceProvider
+//                .metadataGenerator()
+//                //               .entityId("login-test")
 //                .entityId("localhost-demo")
-            .and()
-                .sso()
-                .defaultSuccessURL("/home")
-            .and()
-                .logout()
-                .defaultTargetURL("/")
-            .and()
-                .metadataManager()
-                .metadataLocations("classpath:/idp-innogy.xml")
-//                .metadataLocations("classpath:/idp-ssocircle-new.xml")
-                .refreshCheckInterval(0)
-            .and()
-                .extendedMetadata()
-                .idpDiscoveryEnabled(false)
-            .and()
-                .keyManager()
-                .privateKeyDERLocation("classpath:/localhost.key.der")
-                .publicKeyPEMLocation("classpath:/localhost.cert")
-            .and()
-                .samlContextProviderLb()
-                .scheme("http")
-                .contextPath("/")
-                .serverName("localhost")
-                .serverPort(8080)
-                .includeServerPortInRequestURL(true);
+//            .and()
+//                .sso()
+//                .defaultSuccessURL("/home")
+//            .and()
+//                .logout()
+//                .defaultTargetURL("/")
+//            .and()
+//                .metadataManager()
+//             //                 .metadataLocations("classpath:/idp-innogy.xml")
+//               .metadataLocations("classpath:/idp-ssocircle-new.xml")
+//                .refreshCheckInterval(0)
+//            .and()
+//                .extendedMetadata()
+//                .idpDiscoveryEnabled(false)
+//            .and()
+//                .keyManager()
+//                .privateKeyDERLocation("classpath:/localhost.key.der")
+//                .publicKeyPEMLocation("classpath:/localhost.cert")
+//            .and()
+//                .samlContextProviderLb()
+//                .scheme("http")
+//                .contextPath("/")
+//                .serverName("localhost")
+//                .serverPort(8080)
+//                .includeServerPortInRequestURL(true);
+//
+//        }
+//    }
+	
+	@Configuration
+	public static class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 
-        }
-    }
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.authorizeRequests().antMatchers("/home*").fullyAuthenticated().and().httpBasic().and().csrf().disable();
+		}
+
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.inMemoryAuthentication().withUser("test").password("test").roles("user");
+		}
+		
+	}  
+	
+	@Configuration
+	public static class RepositoryConfig extends RepositoryRestConfigurerAdapter {
+
+		@Override
+		public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+			config.exposeIdsFor(MeetingRoom.class);
+		}
+		
+	}
+	
+		
 }

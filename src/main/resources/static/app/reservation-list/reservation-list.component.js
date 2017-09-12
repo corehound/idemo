@@ -25,9 +25,6 @@ component('reservationList', {
 
             $scope.createReservation = function() {
                 console.log('create reservation');
-                console.log($scope.selectedCity);
-                console.log($scope.selectedRoom);
-                console.log($scope.selectedDate.getDate() + $scope.selectedDate.getMonth() + $scope.selectedDate.getFullYear());
 
                 if ($scope.selectedCity == "" || $scope.selectedRoom == "" || $scope.selectedDate == "") {
                     console.log('Not valid data error.');
@@ -45,27 +42,38 @@ component('reservationList', {
                     }
                 }
 
-                var httpPromise = $http.post('/reservation', data, config);
+                var getPromise = $http.get('/reservation/search/findByDateAndRoomId?date=' + date + '&roomid=' + $scope.selectedRoom.id);
 
-                SpringDataRestAdapter.process(httpPromise).then(function(processedResponse) {
+                SpringDataRestAdapter.process(getPromise).then(function(processedResponse) {               
+                    if (processedResponse._embeddedItems.length > 0) {
+                    	$scope.error="FUUUJ";
+                    } else {
+                    	
+                    	var httpPromise = $http.post('/reservation', data, config);
 
-                    var data2 = $scope.selectedRoom._links.self.href;
+                        SpringDataRestAdapter.process(httpPromise).then(function(processedResponse) {
 
-                    var config2 = {
-                        headers: {
-                            'Content-Type': 'text/uri-list'
-                        }
+                            var data2 = $scope.selectedRoom._links.self.href;
+
+                            var config2 = {
+                                headers: {
+                                    'Content-Type': 'text/uri-list'
+                                }
+                            }
+
+                            var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
+
+                            loadReservationList();
+
+                            $scope.selectedCity = "";
+                            $scope.selectedRoom = "";
+                            $scope.selectedDate = new Date();
+                        });
+                        
+                        $('#modal-reservation').toggleClass('modal-open', !$('#modal-reservation').hasClass('modal-open'))
                     }
-
-                    var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
-
-                    loadReservationList();
-
-                    $scope.selectedCity = "";
-                    $scope.selectedRoom = "";
-                    $scope.selectedDate = new Date();
                 });
-
+                
             };
 
             $scope.cityChanged = function() {
