@@ -7,11 +7,13 @@ component('reservationList', {
     controller: ['$http', '$scope', '$rootScope', 'SpringDataRestAdapter',
 
         function ReservationListController($http, $scope, $rootScope, SpringDataRestAdapter) {
+            var date = new Date()
+            //var selectedDate = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear()
 
             $scope.selectedCity = "";
             $scope.selectedRoom = "";
-            $scope.selectedDate = new Date();
-            $scope.minDate = new Date();
+            $scope.selectedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
+            $scope.minDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
 
             loadReservationList();
             loadCityList();
@@ -66,10 +68,11 @@ component('reservationList', {
                             var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
 
                             loadReservationList();
+                            var date = new Date()
 
                             $scope.selectedCity = "";
                             $scope.selectedRoom = "";
-                            $scope.selectedDate = new Date();
+                            $scope.selectedDate = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear()
                         });
 
                         $scope.hideModal()
@@ -101,8 +104,8 @@ component('reservationList', {
 
                 SpringDataRestAdapter.process(httpPromise, ['city', 'room'], true).then(function(processedResponse) {
                     angular.forEach(processedResponse._embeddedItems, function(reservation, key) {
-                        console.log(" name: " + reservation.user);
-                        console.log(" name: " + reservation.room.name);
+                        // console.log(" name: " + reservation.user);
+                        // console.log(" name: " + reservation.room.name);
                     });
 
                     $scope.reservations = processedResponse._embeddedItems;
