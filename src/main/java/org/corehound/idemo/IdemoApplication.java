@@ -24,7 +24,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProv
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 
 @SpringBootApplication
-//@EnableSAMLSSO
+@EnableSAMLSSO
 public class IdemoApplication {
 
 	public static void main(String[] args) {
@@ -60,59 +60,59 @@ public class IdemoApplication {
 		};
 	}	
 	
-//    @Configuration
-//    public static class IdemoServiceProviderConfig extends ServiceProviderConfigurerAdapter {
-//
-//        @Override
-//        public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
-//
-//            serviceProvider
-//                .metadataGenerator()
-//                //               .entityId("login-test")
-//                .entityId("localhost-demo")
-//            .and()
-//                .sso()
-//                .defaultSuccessURL("/home")
-//            .and()
-//                .logout()
-//                .defaultTargetURL("/")
-//            .and()
-//                .metadataManager()
-//             //                 .metadataLocations("classpath:/idp-innogy.xml")
-//               .metadataLocations("classpath:/idp-ssocircle-new.xml")
-//                .refreshCheckInterval(0)
-//            .and()
-//                .extendedMetadata()
-//                .idpDiscoveryEnabled(false)
-//            .and()
-//                .keyManager()
-//                .privateKeyDERLocation("classpath:/localhost.key.der")
-//                .publicKeyPEMLocation("classpath:/localhost.cert")
-//            .and()
-//                .samlContextProviderLb()
-//                .scheme("http")
-//                .contextPath("/")
-//                .serverName("localhost")
-//                .serverPort(8080)
-//                .includeServerPortInRequestURL(true);
-//
-//        }
-//    }
+    @Configuration
+    public static class IdemoServiceProviderConfig extends ServiceProviderConfigurerAdapter {
+
+        @Override
+        public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
+
+            serviceProvider
+                .metadataGenerator()
+                .entityId("login-test")
+                //.entityId("localhost-demo")
+            .and()
+                .sso()
+                .defaultSuccessURL("/home")
+            .and()
+                .logout()
+                .defaultTargetURL("/")
+            .and()
+                .metadataManager()
+                .metadataLocations("classpath:/idp-innogy.xml")
+               //.metadataLocations("classpath:/idp-ssocircle-new.xml")
+                .refreshCheckInterval(0)
+            .and()
+                .extendedMetadata()
+                .idpDiscoveryEnabled(false)
+            .and()
+                .keyManager()
+                .privateKeyDERLocation("classpath:/localhost.key.der")
+                .publicKeyPEMLocation("classpath:/localhost.cert")
+            .and()
+                .samlContextProviderLb()
+                .scheme("http")
+                .contextPath("/")
+                .serverName("localhost")
+                .serverPort(8080)
+                .includeServerPortInRequestURL(true);
+
+        }
+    }
 	
-	@Configuration
-	public static class SecurityConfigurer extends WebSecurityConfigurerAdapter{
-
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/home*").fullyAuthenticated().and().httpBasic().and().csrf().disable();
-		}
-
-		@Override
-		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-			auth.inMemoryAuthentication().withUser("test").password("test").roles("user");
-		}
-		
-	}  
+//	@Configuration
+//	public static class SecurityConfigurer extends WebSecurityConfigurerAdapter{
+//
+//		@Override
+//		protected void configure(HttpSecurity http) throws Exception {
+//			http.authorizeRequests().antMatchers("/home*").fullyAuthenticated().and().httpBasic().and().csrf().disable();
+//		}
+//
+//		@Override
+//		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//			auth.inMemoryAuthentication().withUser("test").password("test").roles("user");
+//		}
+//		
+//	}  
 	
 	@Configuration
 	public static class RepositoryConfig extends RepositoryRestConfigurerAdapter {
