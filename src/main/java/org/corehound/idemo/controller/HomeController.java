@@ -23,5 +23,7 @@ public class HomeController {
         homeView.addObject("samlAttributes", user.getAttributes());
         return homeView;
     }
+    
+
 	  
 }

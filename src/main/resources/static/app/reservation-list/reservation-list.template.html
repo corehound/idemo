@@ -6,8 +6,9 @@
 </div>
 <hr />
 <div class="container">
-	<div class="rooms">
 
+	<div class="rooms">
+	
 		<div class="room-wrapper" ng-repeat="reservation in reservations">
 			<div class="room">
 				<div class="room-content">
@@ -52,17 +53,17 @@
 						<select name="room" id="room" ng-model="selectedRoom" ng-options="x.name for x in rooms" ng-change="roomChanged()" required>
 						</select>
 					</div>
-										
+									
 					<div>
 						<label for="date">Vyberte datum</label> 
-						<input name="date" ng-model="selectedDate" type="date" id="date" min="{{minDate | date:'dd/MM/yyyy'}}" required/>
+						<input name="date" ng-model="selectedDate" type="date" id="date" min="{{minDate}}" placeholder="dd/MM/yyyy" required />
 					</div>
 					
 				</fieldset>
 				<div class="modal-actions">
 					<a ng-click="cancelReservation()" class="btn btn-danger js-modal">Zavřít</a>
 					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createReservation()">Vytvořit rezervaci</a>
-					<a ng-show="!reservationForm.city.$invalid && !reservationForm.room.$invalid && !reservationForm.date.$invalid" ng-click="createReservation()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
+					<a ng-show="reservationForm.city.$valid && reservationForm.room.$valid && reservationForm.date.$valid" ng-click="createReservation()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
 				</div>
 			</form>
 		</div>
