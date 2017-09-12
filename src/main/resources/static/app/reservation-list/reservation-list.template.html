@@ -1,7 +1,7 @@
 <div class="subheader">
 	<div class="container">
 		<h1>Aktivní rezervace</h1>
-		<a class="btn btn-success js-modal">Vytvořit novou rezervaci</a>
+		<button class="btn btn-success js-modal" ng-click="showModal()">Vytvořit novou rezervaci</button>
 	</div>
 </div>
 <hr />
@@ -62,7 +62,7 @@
 
 				</fieldset>
 				<div class="modal-actions">
-					<a ng-click="cancelReservation()" class="btn btn-danger js-modal">Zavřít</a>
+					<a ng-click="hideModal()" class="btn btn-danger js-modal">Zavřít</a>
 					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createReservation()">Vytvořit rezervaci</a>
 					<a ng-show="reservationForm.city.$valid && reservationForm.room.$valid && reservationForm.date.$valid" ng-click="createReservation()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
 				</div>

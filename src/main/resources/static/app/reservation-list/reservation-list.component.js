@@ -44,11 +44,11 @@ component('reservationList', {
 
                 var getPromise = $http.get('/reservation/search/findByDateAndRoomId?date=' + date + '&roomid=' + $scope.selectedRoom.id);
 
-                SpringDataRestAdapter.process(getPromise).then(function(processedResponse) {               
+                SpringDataRestAdapter.process(getPromise).then(function(processedResponse) {
                     if (processedResponse._embeddedItems.length > 0) {
                     	$scope.error="FUUUJ";
                     } else {
-                    	
+
                     	var httpPromise = $http.post('/reservation', data, config);
 
                         SpringDataRestAdapter.process(httpPromise).then(function(processedResponse) {
@@ -69,11 +69,22 @@ component('reservationList', {
                             $scope.selectedRoom = "";
                             $scope.selectedDate = new Date();
                         });
-                        
-                        $('#modal-reservation').toggleClass('modal-open', !$('#modal-reservation').hasClass('modal-open'))
+
+                        $scope.hideModal()
                     }
                 });
-                
+
+            };
+
+            $scope.showModal = function() {
+                angular.element(document.querySelector('#modal-reservation')).addClass('modal-open')
+                var datepicker = angular.element(document.querySelector('.js-datepicker'))
+                console.log(jQuery(datepicker).datepicker())
+            };
+
+            $scope.hideModal = function() {
+                console.log('hiding')
+                angular.element(document.querySelector('#modal-reservation')).removeClass('modal-open')
             };
 
             $scope.cityChanged = function() {
