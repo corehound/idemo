@@ -18,21 +18,21 @@ import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 @Controller
 public class HomeController {
 
-//    @RequestMapping("/home")
-//    public ModelAndView home(@SAMLUser SAMLUserDetails user) {
-//        ModelAndView homeView = new ModelAndView("home");
-//        homeView.addObject("userId", user.getUsername());
-//        homeView.addObject("samlAttributes", user.getAttributes());
-//        return homeView;
-//    }
-    
     @RequestMapping("/home")
-    public ModelAndView home() {
+    public ModelAndView home(@SAMLUser SAMLUserDetails user) {
         ModelAndView homeView = new ModelAndView("home");
-        homeView.addObject("userId", "test");
-
+        homeView.addObject("userId", user.getUsername());
+        homeView.addObject("samlAttributes", user.getAttributes());
         return homeView;
     }
+    
+//    @RequestMapping("/home")
+//    public ModelAndView home() {
+//        ModelAndView homeView = new ModelAndView("home");
+//        homeView.addObject("userId", "test");
+//
+//        return homeView;
+//    }
     
 
 	  
