@@ -15,6 +15,9 @@ component('reservationList', {
             $scope.selectedDate = (date.getMonth() + 1)  + '/' + date.getDate() + '/' + date.getFullYear();
             $scope.minDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
 
+            /*
+             * Deletes reservation. 
+             */
             $scope.deleteReservation = function(reservation) {
                 console.log(reservation._links.self.href);
                 var httpPromise = $http.delete(reservation._links.self.href).then(function() {
@@ -23,7 +26,9 @@ component('reservationList', {
             };
 
             /*
-             * 
+             * Creates reservation. 
+             * Checks input field validity and room availability.
+             * Sends POST to create reservation and PUT to assign room.
              */
             $scope.createReservation = function() {
                 console.log('create reservation');
@@ -33,15 +38,14 @@ component('reservationList', {
                     return;
                 }
 
-                var dateData = jQuery('#date').val().split('/')
-                var date = dateData[2] + '-' + dateData[0] + '-' + dateData[1]
-                //var date = $scope.selectedDate.getFullYear() + "-" + ($scope.selectedDate.getMonth() + 1) + "-" + $scope.selectedDate.getDate();
+                var dateData = jQuery('#date').val().split('/');
+                var date = dateData[2] + '-' + dateData[0] + '-' + dateData[1];
                 var data = "{\"user\": \"" + $rootScope.userId + "\", \"date\" : \"" + date + "\"}";
 
                 console.log(data);
 
+                // check existing reservation by date and roomId
                 var config = {headers: {'Content-Type': 'application/json'}}
-
                 var getPromise = $http.get('/reservation/search/findByDateAndRoomId?date=' + date + '&roomid=' + $scope.selectedRoom.id);
 
                 SpringDataRestAdapter.process(getPromise).then(function(processedResponse) {
@@ -51,14 +55,14 @@ component('reservationList', {
                     } else {
                     	$scope.error = null;
 
+                    	//create reservation
                     	var httpPromise = $http.post('/reservation', data, config);
 
                         SpringDataRestAdapter.process(httpPromise).then(function(processedResponse) {
 
+                        	// assign room
                             var data2 = $scope.selectedRoom._links.self.href;
-
                             var config2 = {headers: {'Content-Type': 'text/uri-list'}}
-
                             var httpPromisePut = $http.put(processedResponse._links.room.href, data2, config2);
 
                             $scope.loadReservationList();
@@ -66,7 +70,7 @@ component('reservationList', {
 
                             $scope.selectedCity = "";
                             $scope.selectedRoom = "";
-                            $scope.selectedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
+                            $scope.selectedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
                         });
 
                         $scope.hideModal()
@@ -86,12 +90,18 @@ component('reservationList', {
                 angular.element(document.querySelector('#modal-reservation')).removeClass('modal-open')
             };
 
+            /*
+             * Change city function and sets rooms to scope variable.
+             */
             $scope.cityChanged = function() {
                 console.log($scope.selectedCity);
                 console.log($scope.selectedCity.rooms._embeddedItems);
                 $scope.rooms = $scope.selectedCity.rooms._embeddedItems;
             };
 
+            /*
+             * Loads all reservations and sets to scope variable.
+             */
             $scope.loadReservationList = function() {
             	console.log('loadReservationList()');
                 var httpPromise = $http.get('/reservation');
@@ -100,6 +110,9 @@ component('reservationList', {
                 });
             }
             
+            /*
+             * Loads my reservations and sets to scope variable.
+             */
             $scope.loadMyReservationList = function() {
             	console.log('loadMyReservationList()');
                 var httpPromise = $http.get('/reservation/search/findByUser?user=' + $rootScope.userId);
@@ -108,6 +121,9 @@ component('reservationList', {
                 });
             }
 
+            /*
+             * Loads my reservations and sets to scope variable.
+             */
             function loadCityList() {
                 var httpPromise = $http.get('/city');
                 SpringDataRestAdapter.process(httpPromise, 'rooms').then(function(processedResponse) {
