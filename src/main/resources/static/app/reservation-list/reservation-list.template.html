@@ -3,6 +3,13 @@
 		<h1>Aktivní rezervace</h1>
 		<button class="btn btn-success js-modal" ng-click="showModal()">Vytvořit novou rezervaci</button>
 	</div>
+	
+	<div class="container">
+		<div>
+			<button class="btn" ng-click="loadMyReservationList()">Moje rezervace</button>
+			<button class="btn" ng-click="loadReservationList()">Seznam všech rezervací</button>
+		</div>
+	</div>
 </div>
 <hr />
 <div class="container">
@@ -40,8 +47,12 @@
 		<div class="modal-content">
 			<form name="reservationForm">
 				<fieldset>
-					<legend>Vytvoření nové rezervace + {{error}}</legend>
+					<legend>Vytvoření nové rezervace</legend>
 
+					<div ng-if="error=='R1'">
+						Místnost je již obsazena
+					</div>
+					
 					<div>
 						<label for="city">Vyberte město</label>
 						<select name="city" id="city" ng-model="selectedCity" ng-change="cityChanged()" ng-options="x.name for x in cities" required>
@@ -56,13 +67,13 @@
 
 					<div>
 						<label for="date">Vyberte datum</label>
-						<input name="date" ng-model="selectedDate" class="js-datepicker" type="text" id="date" min="{{minDate}}" placeholder="dd/MM/yyyy" required />
+						<input name="date" ng-model="selectedDate" class="js-datepicker" type="text" id="date" min="{{minDate}}" placeholder="MM/dd/yyyy" required />
 					</div>
 
 				</fieldset>
 				<div class="modal-actions">
 					<a ng-click="hideModal()" class="btn btn-danger js-modal">Zavřít</a>
-					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning" ng-click="createReservation()">Vytvořit rezervaci</a>
+					<a ng-show="reservationForm.city.$invalid || reservationForm.room.$invalid || reservationForm.date.$invalid" class="btn btn-warning">Vytvořit rezervaci</a>
 					<a ng-show="reservationForm.city.$valid && reservationForm.room.$valid && reservationForm.date.$valid" ng-click="createReservation()" class="btn btn-success js-modal">Vytvořit rezervaci</a>
 				</div>
 			</form>
