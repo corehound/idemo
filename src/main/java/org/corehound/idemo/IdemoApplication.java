@@ -13,11 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
@@ -99,20 +94,6 @@ public class IdemoApplication {
         }
     }
 	
-//	@Configuration
-//	public static class SecurityConfigurer extends WebSecurityConfigurerAdapter{
-//
-//		@Override
-//		protected void configure(HttpSecurity http) throws Exception {
-//			http.authorizeRequests().antMatchers("/home*").fullyAuthenticated().and().httpBasic().and().csrf().disable();
-//		}
-//
-//		@Override
-//		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//			auth.inMemoryAuthentication().withUser("test").password("test").roles("user");
-//		}
-//		
-//	}  
 	
 	@Configuration
 	public static class RepositoryConfig extends RepositoryRestConfigurerAdapter {
