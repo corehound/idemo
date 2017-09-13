@@ -87,7 +87,7 @@ public class IdemoApplication {
                 .samlContextProviderLb()
                 .scheme("http")
                 .contextPath("/")
-                .serverName("localhost")
+                .serverName("innogy.tm-b2b-demo.cz")
                 .serverPort(8080)
                 .includeServerPortInRequestURL(true);
 
